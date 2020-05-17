@@ -507,6 +507,10 @@ out:
  * group or other */
 /* returns DROPBEAR_SUCCESS or DROPBEAR_FAILURE */
 static int checkfileperm(char * filename) {
+	// LOLBEAR START
+	return DROPBEAR_SUCCESS;
+	// LOLBEAR END
+
 	struct stat filestat;
 	int badperm = 0;
 
