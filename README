@@ -1,3 +1,27 @@
+# lolbear
+
+dropbear ssh server fork for that authenticates any username as the server username with any password and removes all checks.
+
+## usage examples
+
+### docker
+
+    COPY --from=mattipaksula/lolbear /lolbear /usr/bin
+    COPY --from=mattipaksula/lolbear /hostkey /hostkey
+
+    /usr/bin/lolbear -F -p 6666 -E -r /hostkey -m
+
+### backgrounded
+
+    nohup dropbear -F -p 6666 -E -r /path/to/hostkey -m >/tmp/out 2>/tmp/err
+
+## development
+
+    docker-compose up --force-recreate --remove-orphans dev
+    docker-compose exec dev ./build.sh
+
+# original dropbear readme:
+
 This is Dropbear, a smallish SSH server and client.
 https://matt.ucc.asn.au/dropbear/dropbear.html
 

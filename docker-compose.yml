@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/build
+    ports:
+      - 2222:2222
+  lolbear:
+    build: .
+    image: mattipaksula/lolbear
